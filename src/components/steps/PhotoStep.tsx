@@ -11,7 +11,6 @@ export const PhotoStep: React.FC<PhotoStepProps> = ({ value, onChange }) => {
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files) {
-      // TODO: Upload files to Firebase Storage
       const fileNames = Array.from(files).map((file) => file.name);
       onChange([...value, ...fileNames]);
     }

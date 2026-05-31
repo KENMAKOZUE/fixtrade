@@ -1,4 +1,3 @@
-// Backend API service
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
@@ -10,7 +9,7 @@ export const apiClient = axios.create({
   },
 });
 
-// Listings API
+
 export const listingsAPI = {
   create: (data: any) => apiClient.post('/listings', data),
   getAll: () => apiClient.get('/listings'),
