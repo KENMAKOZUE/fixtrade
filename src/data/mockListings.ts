@@ -1,0 +1,38 @@
+export const mockListings = [
+  {
+    id: '1',
+    title: 'Фикс LOW II',
+    subtitle: 'Рама алюминий, вилка карбон',
+    price: 30000,
+    condition: 'Новое',
+    category: 'Велосипеды',
+    images: ['https://images.unsplash.com/photo-1518655048521-f130df041f66?auto=format&fit=crop&w=700&q=80'],
+  },
+  {
+    id: '2',
+    title: 'Шоссейный велосипед Merida',
+    subtitle: 'Отличное состояние',
+    price: 125000,
+    condition: 'Б/У',
+    category: 'Велосипеды',
+    images: ['https://images.unsplash.com/photo-1528834146331-4d50ac0b197a?auto=format&fit=crop&w=700&q=80'],
+  },
+  {
+    id: '3',
+    title: 'Карбоновые колеса 700c',
+    subtitle: 'Новое',
+    price: 45000,
+    condition: 'Новое',
+    category: 'Запчасти',
+    images: ['https://images.unsplash.com/photo-1533810747270-c5c6a4db8d5b?auto=format&fit=crop&w=700&q=80'],
+  },
+  {
+    id: '4',
+    title: 'Шлем KASK Protone',
+    subtitle: 'Отличное состояние',
+    price: 18000,
+    condition: 'Б/У',
+    category: 'Аксессуары',
+    images: ['https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=700&q=80'],
+  },
+];
