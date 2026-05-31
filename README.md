@@ -60,3 +60,4 @@ src/
 6. **Проверка** — подтверждение информации
 # fixtrade
 # fixtrade
+# fixtrade
