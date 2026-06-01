@@ -132,20 +132,35 @@ export const Home: React.FC = () => {
           Все
         </Button>
       </Box>
-      <Box sx={{ display: 'flex', gap: 2, overflowX: 'auto', pb: 2, mb: 2 }}>
+      <Box sx={{ display: 'flex', gap: 2, overflowX: 'auto', pb: 2, mb: 2, ml: -1.5, pr: 1.5, pl: 1.5 }}>
         {mockListings.slice(0, 2).map((item) => (
-          <Card key={item.id} sx={{ minWidth: 220, borderRadius: 3, position: 'relative', cursor: 'pointer' }} onClick={() => navigate(`/listing/${item.id}`)}>
+          <Card
+            key={item.id}
+            sx={{
+              minWidth: 220,
+              width: 220,
+              borderRadius: 3,
+              position: 'relative',
+              cursor: 'pointer',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+            }}
+            onClick={() => navigate(`/listing/${item.id}`)}
+          >
             <CardMedia component="img" height="130" image={item.images[0]} alt={item.title} />
             <IconButton sx={{ position: 'absolute', top: 10, right: 10, bgcolor: 'white' }}>
               <FavoriteBorderIcon />
             </IconButton>
-            <CardContent>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
-                {item.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {item.subtitle}
-              </Typography>
+            <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 2 }}>
+              <Box>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                  {item.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {item.subtitle}
+                </Typography>
+              </Box>
             </CardContent>
           </Card>
         ))}
@@ -156,18 +171,31 @@ export const Home: React.FC = () => {
       </Typography>
       <Box sx={{ display: 'grid', gap: 2, gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
         {mockListings.map((item) => (
-          <Card key={item.id} onClick={() => navigate(`/listing/${item.id}`)} sx={{ borderRadius: 3, cursor: 'pointer', position: 'relative' }}>
+          <Card
+            key={item.id}
+            onClick={() => navigate(`/listing/${item.id}`)}
+            sx={{
+              borderRadius: 3,
+              cursor: 'pointer',
+              position: 'relative',
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: 280,
+            }}
+          >
             <CardMedia component="img" height="130" image={item.images[0]} alt={item.title} />
             <IconButton sx={{ position: 'absolute', top: 10, right: 10, bgcolor: 'white' }}>
               <FavoriteBorderIcon />
             </IconButton>
-            <CardContent>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1 }}>
-                {item.title}
-              </Typography>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0077a5', mb: 0.5 }}>
-                {item.price.toLocaleString('ru-RU')} сом
-              </Typography>
+            <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 2 }}>
+              <Box>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1 }}>
+                  {item.title}
+                </Typography>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0077a5', mb: 0.5 }}>
+                  {item.price.toLocaleString('ru-RU')} сом
+                </Typography>
+              </Box>
               <Typography variant="body2" color="text.secondary">
                 {item.condition === 'Б/У' ? 'Б/у, без царапин' : 'Новое'}
               </Typography>
