@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Chip, TextField, Paper, IconButton, Stack } from '@mui/material';
+import { Box, Typography, Button, Chip, TextField, Paper, Stack, Link } from '@mui/material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import { useNavigate } from 'react-router-dom';
 import { PageHeader } from '../components/PageHeader';
+import { photoCategories, photoCardTemplates } from '../data/photoGallery';
 
-const categories = ['Велосипеды', 'Запчасти', 'Экипировка', 'Аксессуары'];
 const statuses = ['Новое', 'Б/У', 'На запчасти'];
-const templatePhotos = [
-  'https://images.unsplash.com/photo-1508606572321-901ea4437072?auto=format&fit=crop&w=700&q=80',
-  'https://images.unsplash.com/photo-1518655048521-f130df041f66?auto=format&fit=crop&w=700&q=80',
-  'https://images.unsplash.com/photo-1533810747270-c5c6a4db8d5b?auto=format&fit=crop&w=700&q=80',
-];
+const templatePhotos = photoCardTemplates;
 
 export const AddListing: React.FC = () => {
   const navigate = useNavigate();
@@ -77,9 +73,24 @@ export const AddListing: React.FC = () => {
           </Stack>
         ) : (
           <Stack direction="row" spacing={1} sx={{ overflowX: 'auto', mb: 3 }}>
-            {templatePhotos.map((src, index) => (
-              <Paper key={src} sx={{ minWidth: 100, minHeight: 100, borderRadius: 2, overflow: 'hidden' }}>
-                <img src={src} alt={`template-${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            {templatePhotos.map((item) => (
+              <Paper key={item.id} sx={{ minWidth: 180, borderRadius: 2, overflow: 'hidden' }}>
+                <Box sx={{ position: 'relative', width: 180, height: 120, overflow: 'hidden' }}>
+                  <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </Box>
+                <Box sx={{ p: 1, bgcolor: 'white' }}>
+                  <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
+                    {item.category}
+                  </Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                    {item.title}
+                  </Typography>
+                  {item.link ? (
+                    <Link href={item.link} target="_blank" rel="noreferrer" variant="caption" sx={{ display: 'block', overflowWrap: 'anywhere' }}>
+                      {item.link}
+                    </Link>
+                  ) : null}
+                </Box>
               </Paper>
             ))}
           </Stack>
@@ -90,7 +101,7 @@ export const AddListing: React.FC = () => {
             Категория
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-            {categories.map((item) => (
+            {photoCategories.map((item) => (
               <Chip
                 key={item}
                 label={item}

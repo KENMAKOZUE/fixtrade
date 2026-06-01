@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, TextField, Card, CardMedia, CardContent, CardActionArea, Stack, Paper, List, ListItemButton, ListItemText, Chip, InputAdornment } from '@mui/material';
+import { Box, Typography, TextField, Card, CardMedia, CardContent, CardActionArea, Chip } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { mockListings } from '../data/mockListings';
 
-const categories = ['Все', 'Шоссейные', 'MTB', 'BMX', 'Fixed Gear', 'Гревел', 'Городские', 'Для женщин', 'Запчасти', 'Аксессуары', 'Инструменты'];
+const categories = ['Все', 'Велосипеды', 'Запчасти', 'Аксессуары', 'Инструменты'];
 
 export const Catalog: React.FC = () => {
   const navigate = useNavigate();
@@ -17,67 +17,70 @@ export const Catalog: React.FC = () => {
   });
 
   return (
-    <Box sx={{ pt: 2, pb: 12 }}>
-      <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
+    <Box sx={{ pt: 2, pb: 12, px: 1.5 }}>
+      <Typography variant="h5" sx={{ fontWeight: 700, mb: 2, ml: 0.5 }}>
         Каталог
       </Typography>
 
       <Box sx={{ position: 'relative', mb: 2 }}>
-        <SearchIcon sx={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: '#9aa5b1' }} />
+        <SearchIcon sx={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', color: '#9aa5b1', zIndex: 2 }} />
         <TextField
           fullWidth
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Поиск велосипедов и запчастей"
           size="small"
-          sx={{ bgcolor: 'white', borderRadius: 2 }}
+          sx={{
+            bgcolor: '#f4fbff',
+            borderRadius: 3,
+            '& .MuiInputBase-input': {
+              pl: '44px',
+            },
+          }}
         />
       </Box>
 
-      <Paper sx={{ mb: 2, bgcolor: 'white', borderRadius: 3, overflow: 'hidden' }}>
-        <List disablePadding>
-          {categories.map((category) => (
-            <ListItemButton
-              key={category}
-              selected={activeCategory === category}
-              onClick={() => setActiveCategory(category)}
-              sx={{ borderBottom: '1px solid #e8f1f9' }}
-            >
-              <ListItemText primary={category} />
-            </ListItemButton>
-          ))}
-        </List>
-      </Paper>
+      <Box sx={{ mb: 2, display: 'flex', gap: 1, overflowX: 'auto', pb: 1 }}>
+        {categories.map((category) => (
+          <Chip
+            key={category}
+            label={category}
+            clickable
+            color={activeCategory === category ? 'primary' : 'default'}
+            onClick={() => setActiveCategory(category)}
+            sx={{ flex: '0 0 auto', borderRadius: 2, textTransform: 'none' }}
+          />
+        ))}
+      </Box>
 
       <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
         Результаты
       </Typography>
 
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(3, 1fr)' }, gap: 2 }}>
         {filteredListings.map((item) => (
-          <Box key={item.id} sx={{ flex: '1 1 calc(50% - 8px)', minWidth: 180 }}>
-            <Card sx={{ borderRadius: 3, overflow: 'hidden' }}>
-              <CardActionArea onClick={() => navigate(`/listing/${item.id}`)}>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={item.images[0]}
-                  alt={item.title}
-                />
-                <CardContent>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 1 }}>
-                    {item.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                    {item.subtitle}
-                  </Typography>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                    {item.price.toLocaleString('ru-RU')} сом
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Box>
+          <Card key={item.id} sx={{ borderRadius: 3, overflow: 'hidden' }}>
+            <CardActionArea onClick={() => navigate(`/listing/${item.id}`)}>
+              <CardMedia
+                component="img"
+                height="140"
+                image={item.images[0]}
+                alt={item.title}
+                sx={{ objectFit: 'cover' }}
+              />
+              <CardContent sx={{ pb: 2 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 0.5 }}>
+                  {item.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                  {item.subtitle}
+                </Typography>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                  {item.price.toLocaleString('ru-RU')} сом
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
         ))}
       </Box>
     </Box>
