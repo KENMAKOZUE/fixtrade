@@ -48,7 +48,7 @@ export const NearbyShops: React.FC = () => {
         </Box>
       </Box>
 
-      <Box sx={{ px: 2, pt: 3 }}>
+      <Box sx={{ px: 1.5, pt: 3 }}>
         <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
           Мастерские рядом
         </Typography>

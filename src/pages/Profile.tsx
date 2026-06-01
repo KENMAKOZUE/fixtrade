@@ -11,7 +11,7 @@ export const Profile: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ pt: 2, pb: 12 }}>
+    <Box sx={{ pt: 2, pb: 12, px: 1.5 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
         <Avatar sx={{ width: 64, height: 64 }}>Т</Avatar>
         <Box>

@@ -18,7 +18,7 @@ export const ListingDetail: React.FC = () => {
   }
 
   return (
-    <Box sx={{ pt: 2, pb: 12 }}>
+    <Box sx={{ pt: 2, pb: 12, px: 1.5 }}>
       <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)}>
         Назад
       </Button>

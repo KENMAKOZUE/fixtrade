@@ -11,7 +11,7 @@ export const MyListings: React.FC = () => {
   return (
     <Box sx={{ pb: 12, bgcolor: '#f7f9fc' }}>
       <PageHeader title="Мои объявления" />
-      <Box sx={{ px: 2, pt: 3 }}>
+      <Box sx={{ px: 1.5, pt: 3 }}>
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
           <Chip label="Активные (2)" color="primary" />
           <Chip label="Проданные (48)" variant="outlined" />

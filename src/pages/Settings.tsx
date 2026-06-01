@@ -20,7 +20,7 @@ export const Settings: React.FC = () => {
   return (
     <Box sx={{ pb: 12, bgcolor: '#f7f9fc' }}>
       <PageHeader title="Настройки" />
-      <Box sx={{ px: 2, pt: 3 }}>
+      <Box sx={{ px: 1.5, pt: 3 }}>
         <Paper sx={{ p: 2, mb: 2, bgcolor: 'white', borderRadius: 3 }}>
           <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
             Аккаунт

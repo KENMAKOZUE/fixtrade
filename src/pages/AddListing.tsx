@@ -30,7 +30,7 @@ export const AddListing: React.FC = () => {
   return (
     <Box sx={{ pb: 12, bgcolor: '#f7f9fc' }}>
       <PageHeader title="Новое объявление" showBack />
-      <Box sx={{ px: 2, pt: 2 }}>
+      <Box sx={{ px: 1.5, pt: 2 }}>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3, textAlign: 'center' }}>
           Шаг 1 из 2
         </Typography>

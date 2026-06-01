@@ -11,7 +11,7 @@ export const SafeDeals: React.FC = () => {
   return (
     <Box sx={{ pb: 12, bgcolor: '#f7f9fc' }}>
       <PageHeader title="Безопасные сделки" />
-      <Box sx={{ px: 2, pt: 3 }}>
+      <Box sx={{ px: 1.5, pt: 3 }}>
         <Paper sx={{ p: 2, mb: 3, bgcolor: '#e5f4ff', borderRadius: 3 }}>
           <Typography variant="body2" sx={{ fontWeight: 700, mb: 1 }}>
             Защита покупателя и продавца

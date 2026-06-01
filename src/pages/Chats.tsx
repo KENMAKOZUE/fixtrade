@@ -13,7 +13,7 @@ export const Chats: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ pt: 2, pb: 12 }}>
+    <Box sx={{ pt: 2, pb: 12, px: 1.5 }}>
       <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
         Сообщения
       </Typography>

@@ -6,7 +6,7 @@ export const ProfileEdit: React.FC = () => {
   return (
     <Box sx={{ pb: 12, bgcolor: '#f7f9fc' }}>
       <PageHeader title="Редактирование" />
-      <Box sx={{ px: 2, pt: 3 }}>
+      <Box sx={{ px: 1.5, pt: 3 }}>
         <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
           <Avatar sx={{ width: 88, height: 88 }}>Т</Avatar>
         </Box>

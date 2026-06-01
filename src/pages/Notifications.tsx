@@ -32,7 +32,7 @@ export const Notifications: React.FC = () => {
   return (
     <Box sx={{ pb: 12, bgcolor: '#f7f9fc' }}>
       <PageHeader title="Уведомления" />
-      <Box sx={{ px: 2, pt: 3 }}>
+      <Box sx={{ px: 1.5, pt: 3 }}>
         <Stack direction="row" spacing={1} sx={{ mb: 2 }}>
           {tabItems.map((tab) => (
             <Chip

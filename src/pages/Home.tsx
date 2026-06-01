@@ -35,8 +35,8 @@ export const Home: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ pt: 2, pb: 12, px: 2, bgcolor: '#f7f9fc' }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+    <Box sx={{ pt: 2, pb: 12, bgcolor: '#f7f9fc' }}>
+      <Box sx={{ px: 1.5, display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h5" sx={{ fontWeight: 700 }}>
           FixTrade
         </Typography>
@@ -50,7 +50,8 @@ export const Home: React.FC = () => {
         </Stack>
       </Box>
 
-      <Paper sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 1, mb: 3, bgcolor: 'white', borderRadius: 3 }}>
+      <Box sx={{ px: 1.5 }}>
+        <Paper sx={{ display: 'flex', alignItems: 'center', gap: 1, p: 1, mb: 3, bgcolor: 'white', borderRadius: 3 }}>
         <SearchIcon color="action" sx={{ ml: 1 }} />
         <Box sx={{ flex: 1, py: 0.5 }}>
           <Typography variant="body2" color="text.secondary">
@@ -65,7 +66,7 @@ export const Home: React.FC = () => {
       <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
         Категории
       </Typography>
-      <Box sx={{ display: 'grid', gap: 8, gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', mb: 3 }}>
+      <Box sx={{ display: 'grid', gap: 2, gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', mb: 3 }}>
         {categories.map((category) => (
           <Paper
             key={category.label}
@@ -78,14 +79,14 @@ export const Home: React.FC = () => {
               justifyContent: 'center',
               gap: 1,
               borderRadius: 3,
-              bgcolor: '#eef6ff',
-              color: 'text.primary',
+              bgcolor: category.label === 'Велосипеды' ? '#0077a5' : '#eef6ff',
+              color: category.label === 'Велосипеды' ? 'white' : 'text.primary',
               cursor: 'pointer',
               minHeight: 110,
             }}
           >
             {category.icon}
-            <Typography variant="body2" sx={{ fontWeight: 700 }}>
+            <Typography variant="body2" sx={{ fontWeight: 700, textAlign: 'center' }}>
               {category.label}
             </Typography>
           </Paper>
@@ -151,22 +152,26 @@ export const Home: React.FC = () => {
         Отличное состояние
       </Typography>
       <Box sx={{ display: 'grid', gap: 2, gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}>
-        {mockListings.slice(0, 2).map((item) => (
-          <Card key={item.id} onClick={() => navigate(`/listing/${item.id}`)} sx={{ borderRadius: 3, cursor: 'pointer' }}>
+        {mockListings.map((item) => (
+          <Card key={item.id} onClick={() => navigate(`/listing/${item.id}`)} sx={{ borderRadius: 3, cursor: 'pointer', position: 'relative' }}>
             <CardMedia component="img" height="130" image={item.images[0]} alt={item.title} />
+            <IconButton sx={{ position: 'absolute', top: 10, right: 10, bgcolor: 'white' }}>
+              <FavoriteBorderIcon />
+            </IconButton>
             <CardContent>
               <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1 }}>
                 {item.title}
               </Typography>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#0077a5', mb: 0.5 }}>
                 {item.price.toLocaleString('ru-RU')} сом
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {item.condition === 'Б/У' ? 'Б/у, без царапин' : 'Новое состояние'}
+                {item.condition === 'Б/У' ? 'Б/у, без царапин' : 'Новое'}
               </Typography>
             </CardContent>
           </Card>
         ))}
+      </Box>
       </Box>
     </Box>
   );

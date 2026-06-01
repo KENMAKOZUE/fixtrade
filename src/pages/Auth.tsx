@@ -5,7 +5,7 @@ export const Auth: React.FC = () => {
   const [mode, setMode] = useState<'login' | 'register'>('login');
 
   return (
-    <Box sx={{ pt: 4, pb: 12, px: 2 }}>
+    <Box sx={{ pt: 4, pb: 12, px: 1.5 }}>
       <Paper sx={{ p: 3, borderRadius: 3, bgcolor: '#f7f9fc' }}>
         <Box sx={{ width: 56, height: 56, borderRadius: 2, bgcolor: 'primary.main', display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 2 }}>
           <Typography sx={{ color: 'white', fontWeight: 700 }}>🚲</Typography>
