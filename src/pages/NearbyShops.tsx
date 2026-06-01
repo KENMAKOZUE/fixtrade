@@ -27,11 +27,7 @@ export const NearbyShops: React.FC = () => {
           }}
         />
         <Box sx={{ position: 'absolute', inset: 0, opacity: 0.1 }}>
-          <img
-            src="https://images.unsplash.com/photo-1513243752041-5f15404e3b27?auto=format&fit=crop&w=1200&q=80"
-            alt="Map placeholder"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          />
+          <Box sx={{ width: '100%', height: '100%', bgcolor: '#d9d9d9' }} />
         </Box>
         <Box sx={{ position: 'relative', p: 2, display: 'flex', flexDirection: 'column', gap: 2, height: '100%' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>

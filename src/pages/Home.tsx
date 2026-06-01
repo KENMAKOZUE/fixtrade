@@ -105,12 +105,7 @@ export const Home: React.FC = () => {
         </Button>
       </Box>
       <Card sx={{ borderRadius: 3, mb: 3, overflow: 'hidden' }}>
-        <CardMedia
-          component="img"
-          height="160"
-          image="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=800&q=80"
-          alt="Map"
-        />
+        <Box sx={{ height: 160, bgcolor: '#d9d9d9' }} />
         <CardContent>
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
             AsiaSport Service
@@ -148,7 +143,7 @@ export const Home: React.FC = () => {
             }}
             onClick={() => navigate(`/listing/${item.id}`)}
           >
-            <CardMedia component="img" height="130" image={item.images[0]} alt={item.title} />
+            <Box sx={{ height: 130, bgcolor: '#d9d9d9' }} />
             <IconButton sx={{ position: 'absolute', top: 10, right: 10, bgcolor: 'white' }}>
               <FavoriteBorderIcon />
             </IconButton>
@@ -183,7 +178,7 @@ export const Home: React.FC = () => {
               minHeight: 280,
             }}
           >
-            <CardMedia component="img" height="130" image={item.images[0]} alt={item.title} />
+            <Box sx={{ height: 130, bgcolor: '#d9d9d9' }} />
             <IconButton sx={{ position: 'absolute', top: 10, right: 10, bgcolor: 'white' }}>
               <FavoriteBorderIcon />
             </IconButton>

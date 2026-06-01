@@ -35,7 +35,7 @@ export const ListingDetail: React.FC = () => {
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
         {listing.images.slice(0, 4).map((image, index) => (
           <Card key={index} sx={{ flex: '1 1 calc(50% - 8px)', minWidth: 140 }}>
-            <CardMedia component="img" image={image} alt={`${listing.title}-${index}`} />
+            <Box sx={{ width: '100%', height: 160, bgcolor: '#d9d9d9' }} />
           </Card>
         ))}
       </Box>

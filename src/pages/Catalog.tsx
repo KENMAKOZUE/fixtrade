@@ -61,13 +61,7 @@ export const Catalog: React.FC = () => {
         {filteredListings.map((item) => (
           <Card key={item.id} sx={{ borderRadius: 3, overflow: 'hidden' }}>
             <CardActionArea onClick={() => navigate(`/listing/${item.id}`)}>
-              <CardMedia
-                component="img"
-                height="140"
-                image={item.images[0]}
-                alt={item.title}
-                sx={{ objectFit: 'cover' }}
-              />
+              <Box sx={{ height: 140, bgcolor: '#d9d9d9' }} />
               <CardContent sx={{ pb: 2 }}>
                 <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 0.5 }}>
                   {item.title}
