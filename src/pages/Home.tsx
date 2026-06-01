@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -16,6 +16,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import BuildOutlinedIcon from '@mui/icons-material/BuildOutlined';
@@ -33,6 +34,14 @@ const categories = [
 
 export const Home: React.FC = () => {
   const navigate = useNavigate();
+  const [likedItems, setLikedItems] = useState<string[]>([]);
+
+  const toggleLike = (id: string, event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    setLikedItems((prev) =>
+      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
+    );
+  };
 
   return (
     <Box sx={{ pt: 2, pb: 12, bgcolor: '#f7f9fc' }}>
@@ -144,8 +153,11 @@ export const Home: React.FC = () => {
             onClick={() => navigate(`/listing/${item.id}`)}
           >
             <Box sx={{ height: 130, bgcolor: '#d9d9d9' }} />
-            <IconButton sx={{ position: 'absolute', top: 10, right: 10, bgcolor: 'white' }}>
-              <FavoriteBorderIcon />
+            <IconButton
+              sx={{ position: 'absolute', top: 10, right: 10, bgcolor: 'white', color: likedItems.includes(item.id) ? '#d32f2f' : 'inherit' }}
+              onClick={(event) => toggleLike(item.id, event)}
+            >
+              {likedItems.includes(item.id) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
             <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 2 }}>
               <Box>
@@ -179,8 +191,11 @@ export const Home: React.FC = () => {
             }}
           >
             <Box sx={{ height: 130, bgcolor: '#d9d9d9' }} />
-            <IconButton sx={{ position: 'absolute', top: 10, right: 10, bgcolor: 'white' }}>
-              <FavoriteBorderIcon />
+            <IconButton
+              sx={{ position: 'absolute', top: 10, right: 10, bgcolor: 'white', color: likedItems.includes(item.id) ? '#d32f2f' : 'inherit' }}
+              onClick={(event) => toggleLike(item.id, event)}
+            >
+              {likedItems.includes(item.id) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
             <CardContent sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', p: 2 }}>
               <Box>

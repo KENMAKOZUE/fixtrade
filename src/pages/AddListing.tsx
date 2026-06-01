@@ -67,7 +67,7 @@ export const AddListing: React.FC = () => {
           <Stack direction="row" spacing={1} sx={{ overflowX: 'auto', mb: 3 }}>
             {photos.map((src, index) => (
               <Paper key={src} sx={{ minWidth: 100, minHeight: 100, borderRadius: 2, overflow: 'hidden' }}>
-                <img src={src} alt={`preview-${index}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <Box sx={{ width: '100%', height: 100, bgcolor: '#d9d9d9' }} />
               </Paper>
             ))}
           </Stack>
@@ -75,9 +75,7 @@ export const AddListing: React.FC = () => {
           <Stack direction="row" spacing={1} sx={{ overflowX: 'auto', mb: 3 }}>
             {templatePhotos.map((item) => (
               <Paper key={item.id} sx={{ minWidth: 180, borderRadius: 2, overflow: 'hidden' }}>
-                <Box sx={{ position: 'relative', width: 180, height: 120, overflow: 'hidden' }}>
-                  <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </Box>
+                <Box sx={{ position: 'relative', width: 180, height: 120, bgcolor: '#d9d9d9' }} />
                 <Box sx={{ p: 1, bgcolor: 'white' }}>
                   <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
                     {item.category}
