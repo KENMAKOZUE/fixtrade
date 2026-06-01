@@ -66,12 +66,15 @@ export const Home: React.FC = () => {
       <Typography variant="subtitle1" sx={{ fontWeight: 700, mb: 2 }}>
         Категории
       </Typography>
-      <Box sx={{ display: 'grid', gap: 2, gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', mb: 3 }}>
+      <Box sx={{ display: 'flex', gap: 1, overflowX: 'auto', mb: 3, pb: 1 }}>
         {categories.map((category) => (
           <Paper
             key={category.label}
             onClick={() => navigate('/catalog')}
             sx={{
+              flex: '0 0 24%',
+              minWidth: 88,
+              maxWidth: 120,
               p: 2,
               display: 'flex',
               flexDirection: 'column',
@@ -82,11 +85,11 @@ export const Home: React.FC = () => {
               bgcolor: category.label === 'Велосипеды' ? '#0077a5' : '#eef6ff',
               color: category.label === 'Велосипеды' ? 'white' : 'text.primary',
               cursor: 'pointer',
-              minHeight: 110,
+              minHeight: 102,
             }}
           >
             {category.icon}
-            <Typography variant="body2" sx={{ fontWeight: 700, textAlign: 'center' }}>
+            <Typography variant="body2" sx={{ fontWeight: 700, textAlign: 'center', fontSize: '0.8rem' }}>
               {category.label}
             </Typography>
           </Paper>
