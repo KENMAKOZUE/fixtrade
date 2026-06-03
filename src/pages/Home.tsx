@@ -24,6 +24,21 @@ import BikeScooterOutlinedIcon from '@mui/icons-material/BikeScooterOutlined';
 import WidgetsOutlinedIcon from '@mui/icons-material/WidgetsOutlined';
 import { mockListings } from '../data/mockListings';
 
+// Импорты для мини-карты Leaflet
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import L from 'leaflet';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+// Настройка иконок для карты
+const DefaultIcon = L.icon({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+});
+L.Marker.prototype.options.icon = DefaultIcon;
+
 const categories = [
   { label: 'Велосипеды', icon: <BikeScooterOutlinedIcon fontSize="medium" /> },
   { label: 'Запчасти', icon: <BuildOutlinedIcon fontSize="medium" /> },
@@ -44,7 +59,7 @@ export const Home: React.FC = () => {
 
   return (
     <Box sx={{ pt: 2, pb: 12, bgcolor: '#ffffff', minHeight: '100vh' }}>
-      {/* Шапка (Логотип и Иконки профиля) */}
+      {/* Шапка */}
       <Box sx={{ px: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="h5" sx={{ fontWeight: 800, letterSpacing: '-0.5px' }}>
           <Box component="span" sx={{ color: '#0077a5' }}>Fix</Box>
@@ -103,7 +118,6 @@ export const Home: React.FC = () => {
           <Paper
             key={category.label}
             elevation={0}
-            // Передаем название категории в стейт роутера!
             onClick={() => navigate('/catalog', { state: { category: category.label } })}
             sx={{
               flex: 1, 
@@ -135,7 +149,7 @@ export const Home: React.FC = () => {
         ))}
       </Box>
 
-      {/* Мастерские рядом */}
+      {/* ИСПРАВЛЕНА СЕКЦИЯ: Мастерские рядом с настоящей мини-картой */}
       <Box sx={{ px: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
@@ -145,23 +159,56 @@ export const Home: React.FC = () => {
             На карте
           </Button>
         </Box>
-        <Card elevation={0} sx={{ border: '1px solid #e0e6ed', borderRadius: '16px', mb: 4, overflow: 'hidden' }}>
-          <CardMedia
-            component="img"
-            height="140"
-            image="src/data/Figmap.png"
-            alt="Map"
-          />
+        
+        {/* Карточка с картой */}
+        <Card 
+          elevation={0} 
+          onClick={() => navigate('/shops')} // При клике на всю карточку переходим на большую карту
+          sx={{ 
+            border: '1px solid #e0e6ed', 
+            borderRadius: '16px', 
+            mb: 4, 
+            overflow: 'hidden',
+            cursor: 'pointer' 
+          }}
+        >
+          <Box sx={{ height: 140, position: 'relative' }}>
+            {/* Мини-карта. 
+              Отключаем zoomControl, dragging, touchZoom и т.д., чтобы карта была "картинкой"
+              и не перехватывала скролл пользователя вниз по странице.
+            */}
+            <MapContainer 
+              center={[42.8746, 74.5698]} // Центр Бишкека
+              zoom={12} 
+              zoomControl={false}
+              dragging={false}
+              touchZoom={false}
+              scrollWheelZoom={false}
+              doubleClickZoom={false}
+              style={{ width: '100%', height: '100%', zIndex: 1 }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              {/* Пара маркеров для красоты (центр и юг Бишкека) */}
+              <Marker position={[42.8752, 74.5880]} />
+              <Marker position={[42.8228, 74.6163]} />
+            </MapContainer>
+            
+            {/* Прозрачный блок поверх карты, чтобы предотвратить любые клики внутри самой карты */}
+            <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 2 }} />
+          </Box>
+          
           <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 2, pb: "16px !important" }}>
             <Box>
               <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5, fontSize: '1rem' }}>
-                AsiaSport Service
+                4 мастерские
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                2 км · Открыто до 19:00
+                В радиусе 5 км
               </Typography>
             </Box>
-            <Button variant="contained" sx={{ bgcolor: '#0077a5', textTransform: 'none', borderRadius: '8px' }} size="small" onClick={() => navigate('/shops')}>
+            <Button variant="contained" sx={{ bgcolor: '#0077a5', textTransform: 'none', borderRadius: '8px' }} size="small">
               Подробнее
             </Button>
           </CardContent>
@@ -211,7 +258,7 @@ export const Home: React.FC = () => {
         ))}
       </Box>
 
-      {/* Сетка товаров (Отличное состояние / Новые) */}
+      {/* Сетка товаров */}
       <Box sx={{ px: 2 }}>
         <Box sx={{ display: 'flex', gap: 2, mb: 1.5 }}>
           <Typography variant="body2" color="text.secondary" sx={{ flex: 1 }}>
