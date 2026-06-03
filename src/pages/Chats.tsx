@@ -1,40 +1,153 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Typography, List, ListItemAvatar, Avatar, ListItemText, Badge, ListItemButton } from '@mui/material';
+import { Box, Typography, InputBase, Paper, Avatar } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'; // Та самая иконка, как на макете
 
-const chats = [
-  { id: '1', name: 'Александр', message: 'Здравствуйте, а шлем еще в наличии? Готов забрать сегодня.', time: 'Только что', unread: 1 },
-  { id: '2', name: 'Мария', message: 'Можно небольшую скидку? 30000с устроит?', time: '10 мин назад', unread: 0 },
-  { id: '3', name: 'Иван', message: 'Спасибо, все отлично работает!', time: '2 часа назад', unread: 0 },
-  { id: '4', name: 'Евгений', message: 'Отправил через безопасную сделку, номер трека можете посмотреть...', time: 'Вчера', unread: 0 },
+// Правильный путь до твоего фото
+import userIcon from '../data/icon.png';
+
+const chatsData = [
+  { 
+    id: '1', 
+    name: 'FixTrade Поддержка', 
+    message: 'Ваш платеж успешно зарезерв...', 
+    time: '10:42', 
+    unread: 2, 
+    active: false, // Убрали голубое выделение
+    productImage: null,
+    avatar: null // Оставляем null, чтобы показалась иконка AccountCircle
+  },
+  { 
+    id: '2', 
+    name: 'Алексей В.', 
+    message: 'Договорились, буду се...', 
+    time: 'Вчера', 
+    unread: 2, 
+    active: false, 
+    productImage: 'https://placehold.co/100x100/f4f7fb/8b9eb0?text=Bike',
+    avatar: userIcon // Используем твое фото
+  },
 ];
 
 export const Chats: React.FC = () => {
   const navigate = useNavigate();
+  const [search, setSearch] = useState('');
+
+  const filteredChats = chatsData.filter(chat => 
+    chat.name.toLowerCase().includes(search.toLowerCase()) || 
+    chat.message.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
-    <Box sx={{ pt: 2, pb: 12, px: 1.5 }}>
-      <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
-        Сообщения
-      </Typography>
-      <List>
-        {chats.map((chat) => (
-          <ListItemButton key={chat.id} divider onClick={() => navigate(`/chat/${chat.id}`)}>
-            <ListItemAvatar>
-              <Badge color="primary" badgeContent={chat.unread} invisible={chat.unread === 0}>
-                <Avatar>{chat.name[0]}</Avatar>
-              </Badge>
-            </ListItemAvatar>
-            <ListItemText
-              primary={chat.name}
-              secondary={chat.message}
-            />
-            <Typography variant="caption" color="text.secondary">
-              {chat.time}
-            </Typography>
-          </ListItemButton>
+    <Box sx={{ minHeight: '100vh', bgcolor: '#ffffff', pb: 12 }}>
+      
+      {/* Блок поиска */}
+      <Box sx={{ px: 2, pt: 2, mb: 2 }}>
+        <Paper
+          elevation={0}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            px: 2,
+            bgcolor: '#f0f5fa',
+            borderRadius: '16px',
+          }}
+        >
+          <SearchIcon sx={{ color: '#8b9eb0', mr: 1 }} />
+          <InputBase
+            placeholder="Поиск по сообщениям..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            sx={{ flex: 1, fontSize: '0.95rem', color: '#1a1a1a', py: 1.5, fontWeight: 600 }}
+          />
+        </Paper>
+      </Box>
+
+      {/* Список чатов */}
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        {filteredChats.map((chat) => (
+          <Box
+            key={chat.id}
+            onClick={() => navigate(`/chat/${chat.id}`)}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+              p: 2,
+              bgcolor: chat.active ? '#dcefff' : 'transparent',
+              cursor: 'pointer',
+              borderBottom: chat.active ? 'none' : '1px solid #f0f5fa', 
+            }}
+          >
+            {/* Точная логика аватарки */}
+            {chat.avatar ? (
+              <Avatar src={chat.avatar} sx={{ width: 56, height: 56 }} />
+            ) : (
+              <AccountCircleIcon sx={{ fontSize: 56, color: '#1a1a1a' }} />
+            )}
+
+            {/* Текстовый блок */}
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', mb: 0.5 }}>
+                <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#1a1a1a', fontSize: '1.05rem' }}>
+                  {chat.name}
+                </Typography>
+                <Typography variant="caption" sx={{ color: '#8b9eb0', fontWeight: 600 }}>
+                  {chat.time}
+                </Typography>
+              </Box>
+              
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography 
+                  variant="body2" 
+                  sx={{ 
+                    color: '#1a1a1a', 
+                    fontWeight: 600, 
+                    whiteSpace: 'nowrap', 
+                    overflow: 'hidden', 
+                    textOverflow: 'ellipsis', 
+                    pr: 1 
+                  }}
+                >
+                  {chat.message}
+                </Typography>
+                
+                {chat.unread > 0 && (
+                  <Box 
+                    sx={{ 
+                      minWidth: 22, 
+                      height: 22, 
+                      borderRadius: '11px', 
+                      bgcolor: '#0077a5', 
+                      color: 'white', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      fontSize: '0.75rem', 
+                      fontWeight: 800, 
+                      px: 0.5 
+                    }}
+                  >
+                    {chat.unread}
+                  </Box>
+                )}
+              </Box>
+            </Box>
+
+            {/* Картинка товара */}
+            {chat.productImage && (
+              <Box
+                component="img"
+                src={chat.productImage}
+                alt="Товар"
+                sx={{ width: 48, height: 48, borderRadius: '8px', objectFit: 'cover', ml: 1 }}
+              />
+            )}
+          </Box>
         ))}
-      </List>
+      </Box>
+
     </Box>
   );
 };

@@ -6,7 +6,7 @@ import { AddListing } from './pages/AddListing';
 import { Catalog } from './pages/Catalog';
 import { Chats } from './pages/Chats';
 import { Profile } from './pages/Profile';
-import { ProfileEdit } from './pages/ProfileEdit';
+import { ProfileEdit } from './pages/Profile_edit';
 import { Favorites } from './pages/Favorites';
 import { Notifications } from './pages/Notifications';
 import { MyListings } from './pages/MyListings';
@@ -14,9 +14,9 @@ import { SafeDeals } from './pages/SafeDeals';
 import { Settings } from './pages/Settings';
 import { NearbyShops } from './pages/NearbyShops';
 import { ChatThread } from './pages/ChatThread';
-import { Auth } from './pages/Auth';
 import { ListingDetail } from './pages/ListingDetail';
 import { Support } from './pages/Support';
+import { ShopDetail } from './pages/ShopDetail';
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
           <Route path="/chats" element={<Chats />} />
           <Route path="/chat/:id" element={<ChatThread />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/profile/edit" element={<ProfileEdit />} />
+          <Route path="/profile_edit" element={<ProfileEdit />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/my-listings" element={<MyListings />} />
@@ -38,7 +38,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/shops" element={<NearbyShops />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/auth" element={<Auth />} />
+          <Route path="/shop/:id" element={<ShopDetail />} />
         </Routes>
       </MainLayout>
     </Router>
