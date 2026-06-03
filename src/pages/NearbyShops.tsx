@@ -25,7 +25,6 @@ const shops = [
   { id: '1', name: 'Asia Sport', logo: 'https://placehold.co/150x150/ffffff/1a1a1a?text=AS', coords: [42.8228, 74.6163] as [number, number] },
   { id: '2', name: 'Velopro', logo: 'https://placehold.co/150x150/ff7f00/ffffff?text=V', coords: [42.8765, 74.6145] as [number, number] },
   { id: '3', name: 'Gergert sport', logo: 'https://placehold.co/150x150/ffffff/d32f2f?text=G', coords: [42.8270, 74.6190] as [number, number] },
-  { id: '4', name: 'Jetim.KG', logo: 'https://placehold.co/150x150/e0e0e0/d32f2f?text=Velo', coords: [42.8752, 74.5880] as [number, number] },
 ];
 
 // Специальный компонент для отслеживания кликов по карте

@@ -84,7 +84,8 @@ export const Profile: React.FC = () => {
         <Typography variant="h5" sx={{ fontWeight: 800, color: '#1a1a1a' }}>
           Профиль
         </Typography>
-        <IconButton sx={{ color: '#1a1a1a' }}>
+        {/* ИСПРАВЛЕНО: Добавлен onClick для перехода на уведомления */}
+        <IconButton sx={{ color: '#1a1a1a' }} onClick={() => navigate('/notifications')}>
           <NotificationsNoneOutlinedIcon />
         </IconButton>
       </Box>

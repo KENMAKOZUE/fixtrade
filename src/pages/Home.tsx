@@ -178,9 +178,10 @@ export const Home: React.FC = () => {
               и не перехватывала скролл пользователя вниз по странице.
             */}
             <MapContainer 
-              center={[42.8746, 74.5698]} // Центр Бишкека
+              center={[42.8746, 74.5698]} 
               zoom={12} 
               zoomControl={false}
+              attributionControl={false} /* <--- ВОТ ЭТА СТРОКА УБИРАЕТ СЛОВО LEAFLET */
               dragging={false}
               touchZoom={false}
               scrollWheelZoom={false}
@@ -188,7 +189,8 @@ export const Home: React.FC = () => {
               style={{ width: '100%', height: '100%', zIndex: 1 }}
             >
               <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; CartoDB'
+                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
               />
               {/* Пара маркеров для красоты (центр и юг Бишкека) */}
               <Marker position={[42.8752, 74.5880]} />
