@@ -17,6 +17,7 @@ import { ChatThread } from './pages/ChatThread';
 import { ListingDetail } from './pages/ListingDetail';
 import { Support } from './pages/Support';
 import { ShopDetail } from './pages/ShopDetail';
+import { WorkshopsMap } from './pages/WorkShopMap';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/shops" element={<NearbyShops />} />
           <Route path="/support" element={<Support />} />
           <Route path="/shop/:id" element={<ShopDetail />} />
+          <Route path="/workshops" element={<WorkshopsMap />} />
         </Routes>
       </MainLayout>
     </Router>

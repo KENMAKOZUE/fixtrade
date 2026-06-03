@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Typography, Avatar, IconButton, InputBase } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SendIcon from '@mui/icons-material/Send';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle'; // Та самая иконка
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 // Правильный путь до твоего фото
 import userIcon from '../data/icon.png';
@@ -48,7 +48,8 @@ export const ChatThread: React.FC = () => {
   };
 
   return (
-    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column', bgcolor: '#f4f7fb' }}>
+    // ИСПРАВЛЕНО: Высота экрана минус высота отступа твоего MainLayout (80px)
+    <Box sx={{ height: 'calc(100vh - 80px)', display: 'flex', flexDirection: 'column', bgcolor: '#f4f7fb' }}>
       
       {/* Шапка чата */}
       <Box sx={{ display: 'flex', alignItems: 'center', p: 2, pt: 3, bgcolor: 'white' }}>
@@ -94,7 +95,7 @@ export const ChatThread: React.FC = () => {
         </Box>
       </Box>
 
-      {/* Зона сообщений */}
+      {/* Зона сообщений (flex: 1 заставляет её занять всё свободное место) */}
       <Box sx={{ flex: 1, px: 2, py: 3, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 2 }}>
         {conversation.messages.map((message) => {
           const isMe = message.sender === 'me';
@@ -141,8 +142,8 @@ export const ChatThread: React.FC = () => {
         })}
       </Box>
 
-      {/* Поле ввода */}
-      <Box sx={{ p: 2, bgcolor: 'white', borderTop: '1px solid #f0f5fa', display: 'flex', gap: 1.5, alignItems: 'center', pb: 4 }}>
+      {/* ИСПРАВЛЕНО: Поле ввода без position fixed. Оно само прижмется к низу */}
+      <Box sx={{ p: 2, bgcolor: 'white', borderTop: '1px solid #f0f5fa', display: 'flex', gap: 1.5, alignItems: 'center' }}>
         <Box sx={{ width: 44, height: 44, borderRadius: '50%', bgcolor: '#dcefff', flexShrink: 0 }} />
         <InputBase
           fullWidth
