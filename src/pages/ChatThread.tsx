@@ -1,43 +1,45 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Box, Typography, Avatar, Paper, TextField, IconButton, InputAdornment } from '@mui/material';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Box, Typography, Avatar, IconButton, InputBase } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SendIcon from '@mui/icons-material/Send';
-import { PageHeader } from '../components/PageHeader';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'; // Та самая иконка
+
+// Правильный путь до твоего фото
+import userIcon from '../data/icon.png';
 
 type ThreadMessage = { id: string; text: string; sender: 'me' | 'other'; time: string };
-type Thread = { name: string; messages: ThreadMessage[] };
+type Thread = { 
+  name: string; 
+  productTitle: string; 
+  productPrice: string; 
+  productImage: string;
+  avatar: string | null;
+  messages: ThreadMessage[] 
+};
 
-const threads: Record<'1' | '2', Thread> = {
-  '1': {
-    name: 'Александр',
-    messages: [
-      { id: 'm1', text: 'Здравствуйте! Велосипед еще актуален? Заинтересован объявлением.', sender: 'other', time: '14:20' },
-      { id: 'm2', text: 'Приветствую! Да, продаю. Состояние отличное, цена и кассета новые, после ТО прошел около 50 км.', sender: 'me', time: '14:45' },
-      { id: 'm3', text: 'Супер. А где можно посмотреть?', sender: 'other', time: '15:10' },
-      { id: 'm4', text: 'В 10 мкр рядом с Бублика, вечером после 18:00', sender: 'me', time: '15:15' },
-    ],
-  },
+const threads: Record<string, Thread> = {
   '2': {
-    name: 'Мария',
+    name: 'Алексей В.',
+    productTitle: 'Шоссейный велосипед',
+    productPrice: '125 000с',
+    productImage: 'https://placehold.co/100x100/f4f7fb/8b9eb0?text=Bike',
+    avatar: userIcon, // Используем твое фото
     messages: [
-      { id: 'm1', text: 'Можно небольшую скидку? 30000с устроит? Сама приеду.', sender: 'other', time: '14:30' },
-      { id: 'm2', text: 'Согласен, давайте за 30000с. Когда вам удобно?', sender: 'me', time: '14:50' },
+      { id: 'm1', text: 'Здраствуйте! Велосипед еще актуален? Заинтересовало объявление.', sender: 'me', time: '14:20' },
+      { id: 'm2', text: 'Приветствую! Да, продаю. Состояние отличное, цепь и кассета новые, после ТО проехал около 50 км.', sender: 'other', time: '14:45' },
+      { id: 'm3', text: 'Супер. А где можно посмотреть?', sender: 'me', time: '15:10' },
+      { id: 'm4', text: 'В 10 мкр рядом с Бублика, вечером после 18:00', sender: 'other', time: '15:15' },
     ],
   },
 };
 
 export const ChatThread: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [messageText, setMessageText] = useState('');
-  const conversation = id ? threads[id as keyof typeof threads] : undefined;
-
-  if (!conversation) {
-    return (
-      <Box sx={{ pt: 4, px: 2 }}>
-        <Typography>Переписка не найдена</Typography>
-      </Box>
-    );
-  }
+  
+  const conversation = id && threads[id] ? threads[id] : threads['2'];
 
   const handleSend = () => {
     if (messageText.trim()) {
@@ -46,86 +48,117 @@ export const ChatThread: React.FC = () => {
   };
 
   return (
-    <Box sx={{ pb: 12, bgcolor: '#f7f9fc', display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <PageHeader title={conversation.name} />
+    <Box sx={{ height: '100vh', display: 'flex', flexDirection: 'column', bgcolor: '#f4f7fb' }}>
       
-      <Paper sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 2, bgcolor: 'white', borderRadius: 3, mx: 2, mt: 1 }}>
-        <Avatar>{conversation.name[0]}</Avatar>
+      {/* Шапка чата */}
+      <Box sx={{ display: 'flex', alignItems: 'center', p: 2, pt: 3, bgcolor: 'white' }}>
+        <IconButton 
+          onClick={() => navigate(-1)}
+          sx={{ bgcolor: '#dcefff', color: '#0077a5', mr: 2, '&:hover': { bgcolor: '#c5e4ff' } }}
+        >
+          <ArrowBackIcon />
+        </IconButton>
+        
+        {/* Логика аватарки */}
+        {conversation.avatar ? (
+          <Avatar src={conversation.avatar} sx={{ width: 44, height: 44, mr: 1.5 }} />
+        ) : (
+          <AccountCircleIcon sx={{ fontSize: 44, color: '#1a1a1a', mr: 1.5 }} />
+        )}
+
         <Box>
-          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 800, lineHeight: 1.2, color: '#1a1a1a' }}>
             {conversation.name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="caption" sx={{ color: '#0077a5', fontWeight: 600 }}>
             В сети
           </Typography>
         </Box>
-      </Paper>
-
-      <Box sx={{ flex: 1, px: 2, pt: 2, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {conversation.messages.map((message) => (
-          <Box
-            key={message.id}
-            sx={{
-              display: 'flex',
-              justifyContent: message.sender === 'me' ? 'flex-end' : 'flex-start',
-            }}
-          >
-            <Box
-              sx={{
-                maxWidth: '75%',
-                bgcolor: message.sender === 'me' ? '#0077a5' : '#ffffff',
-                color: message.sender === 'me' ? 'white' : '#000000',
-                p: '12px 16px',
-                borderRadius: '20px',
-                borderTopLeftRadius: message.sender === 'me' ? '20px' : '4px',
-                borderTopRightRadius: message.sender === 'me' ? '4px' : '20px',
-                boxShadow: message.sender === 'me' ? 'none' : '0 1px 2px rgba(0, 0, 0, 0.08)',
-                wordBreak: 'break-word',
-              }}
-            >
-              <Typography variant="body2" sx={{ mb: 0.5, lineHeight: 1.4 }}>
-                {message.text}
-              </Typography>
-              <Typography variant="caption" sx={{ opacity: 0.7 }}>
-                {message.time}
-              </Typography>
-            </Box>
-          </Box>
-        ))}
       </Box>
 
-      <Paper
-        sx={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          p: 2,
-          bgcolor: 'white',
-          borderRadius: 0,
-          display: 'flex',
-          gap: 1,
-          alignItems: 'center',
-          zIndex: 100,
-        }}
-      >
-        <TextField
+      {/* Баннер товара */}
+      <Box sx={{ display: 'flex', alignItems: 'center', px: 2, py: 1.5, bgcolor: 'white', borderTop: '1px solid #f0f5fa', borderBottom: '1px solid #f0f5fa' }}>
+        <Box 
+          component="img" 
+          src={conversation.productImage} 
+          alt="Товар" 
+          sx={{ width: 48, height: 48, borderRadius: '8px', objectFit: 'cover', mr: 1.5 }} 
+        />
+        <Box>
+          <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1a1a1a', lineHeight: 1.2 }}>
+            {conversation.productTitle}
+          </Typography>
+          <Typography variant="subtitle2" sx={{ color: '#0077a5', fontWeight: 800 }}>
+            {conversation.productPrice}
+          </Typography>
+        </Box>
+      </Box>
+
+      {/* Зона сообщений */}
+      <Box sx={{ flex: 1, px: 2, py: 3, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 2 }}>
+        {conversation.messages.map((message) => {
+          const isMe = message.sender === 'me';
+          return (
+            <Box
+              key={message.id}
+              sx={{
+                display: 'flex',
+                justifyContent: isMe ? 'flex-end' : 'flex-start',
+              }}
+            >
+              <Box
+                sx={{
+                  maxWidth: '80%',
+                  bgcolor: isMe ? '#0077a5' : '#ffffff',
+                  color: isMe ? 'white' : '#1a1a1a',
+                  p: '12px 16px',
+                  borderRadius: '16px',
+                  borderTopRightRadius: isMe ? '4px' : '16px',
+                  borderTopLeftRadius: !isMe ? '4px' : '16px',
+                  border: isMe ? 'none' : '1px solid #e0e6ed',
+                  position: 'relative',
+                }}
+              >
+                <Typography variant="body2" sx={{ fontWeight: 600, fontSize: '0.95rem', lineHeight: 1.4, mb: 2 }}>
+                  {message.text}
+                </Typography>
+                <Typography 
+                  variant="caption" 
+                  sx={{ 
+                    position: 'absolute', 
+                    bottom: 6, 
+                    right: 12, 
+                    fontWeight: 700,
+                    fontSize: '0.65rem',
+                    color: isMe ? 'rgba(255,255,255,0.7)' : '#8b9eb0' 
+                  }}
+                >
+                  {message.time}
+                </Typography>
+              </Box>
+            </Box>
+          );
+        })}
+      </Box>
+
+      {/* Поле ввода */}
+      <Box sx={{ p: 2, bgcolor: 'white', borderTop: '1px solid #f0f5fa', display: 'flex', gap: 1.5, alignItems: 'center', pb: 4 }}>
+        <Box sx={{ width: 44, height: 44, borderRadius: '50%', bgcolor: '#dcefff', flexShrink: 0 }} />
+        <InputBase
           fullWidth
           value={messageText}
           onChange={(e) => setMessageText(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              handleSend();
-            }
-          }}
+          onKeyPress={(e) => e.key === 'Enter' && handleSend()}
           placeholder="Сообщение..."
-          size="small"
           sx={{
-            bgcolor: '#f0f4f9',
+            bgcolor: '#dcefff',
             borderRadius: '24px',
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '24px',
-            },
+            px: 2.5,
+            py: 1,
+            fontSize: '0.95rem',
+            fontWeight: 600,
+            color: '#0077a5',
+            '&::placeholder': { color: '#8b9eb0', opacity: 1 }
           }}
         />
         <IconButton
@@ -134,16 +167,15 @@ export const ChatThread: React.FC = () => {
             bgcolor: '#0077a5',
             color: 'white',
             borderRadius: '50%',
-            width: 40,
-            height: 40,
-            '&:hover': {
-              bgcolor: '#005a7f',
-            },
+            width: 44,
+            height: 44,
+            flexShrink: 0,
+            '&:hover': { bgcolor: '#005f85' },
           }}
         >
-          <SendIcon fontSize="small" />
+          <SendIcon fontSize="small" sx={{ ml: 0.5 }} />
         </IconButton>
-      </Paper>
+      </Box>
     </Box>
   );
 };
